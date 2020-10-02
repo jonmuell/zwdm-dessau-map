@@ -1,10 +1,4 @@
-const data = [
-  {
-    "id": "ZWDM",
-    "title": "Zeig was du machst!",
-    "description": "Ein toller Laden"
-  }
-];
+const axios = require("axios");
 
 var map = new mapboxgl.Map({
     container: 'map',
@@ -13,60 +7,66 @@ var map = new mapboxgl.Map({
     style: 'mapbox://styles/zeigwasdumachst/ckfjtlbo32i5a19ntppurfagk'
 });
 
-// var marker = new mapboxgl.Marker()
-// .setLngLat([12.246593, 51.836805])
-// .addTo(map);
-
 map.on('load', function () {
-    map.addSource('places', {
-        'type': 'geojson',
-        'data': {
-            'type': 'FeatureCollection',
-            'features': [
-                {
-                    'type': 'Feature',
-                    'properties': {
-                        'id': 'ZWDM',
-                        'icon': 'theatre'
-                    },
-                    'geometry': {
-                        'type': 'Point',
-                        'coordinates': [12.246593, 51.836805]
-                    }
+    axios.get("/data")
+    .then((res) => {
+        const data = res.data;
+        const mapData = data.map((entry) => {
+            return {
+                'type': 'Feature',
+                'properties': {
+                    'id': entry.id,
+                    'icon': 'theatre'
                 },
-            ]
-        }
-    });
+                'geometry': {
+                    'type': 'Point',
+                    'coordinates': [entry.position.lon, entry.position.lat]
+                }
+            }
+        });
 
-// Add a layer showing the places.
-    map.addLayer({
-        'id': 'places',
-        'type': 'symbol',
-        'source': 'places',
-        'layout': {
-            'icon-image': '{icon}-15',
-            'icon-allow-overlap': true
-        }
-    });
+        map.addSource('places', {
+            'type': 'geojson',
+            'data': {
+                'type': 'FeatureCollection',
+                'features': mapData
+            }
+        });
 
-// When a click event occurs on a feature in the places layer, open a popup at the
-// location of the feature, with description HTML from its properties.
-    map.on('click', 'places', function (e) {
-        const id = e.features[0].properties.id;
+        // Add a layer showing the places.
+        map.addLayer({
+            'id': 'places',
+            'type': 'symbol',
+            'source': 'places',
+            'layout': {
+                'icon-image': '{icon}-15',
+                'icon-allow-overlap': true
+            }
+        });
 
-        const obj = data.filter(entry => entry.id === id)[0];
+        // When a click event occurs on a feature in the places layer, open a popup at the
+        // location of the feature, with description HTML from its properties.
+        map.on('click', 'places', function (e) {
+            const id = e.features[0].properties.id;
 
-        $("#title").html(obj.title);
-        $("#description").html(obj.description);
-    });
+            const obj = data.filter(entry => entry.id === id)[0];
 
-// Change the cursor to a pointer when the mouse is over the places layer.
-    map.on('mouseenter', 'places', function () {
-        map.getCanvas().style.cursor = 'pointer';
-    });
+            $("#title").html(obj.title);
+            $("#description").html(obj.description);
+        });
 
-// Change it back to a pointer when it leaves.
-    map.on('mouseleave', 'places', function () {
-        map.getCanvas().style.cursor = '';
-    });
+        // Change the cursor to a pointer when the mouse is over the places layer.
+        map.on('mouseenter', 'places', function () {
+            map.getCanvas().style.cursor = 'pointer';
+        });
+
+        // Change it back to a pointer when it leaves.
+        map.on('mouseleave', 'places', function () {
+            map.getCanvas().style.cursor = '';
+        });
+    })
+    .catch((err) => {
+        console.error(err);
+    })
+
 });
