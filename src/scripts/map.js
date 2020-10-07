@@ -16,7 +16,8 @@ map.on('load', function () {
                 'type': 'Feature',
                 'properties': {
                     'id': entry.id,
-                    'icon': 'theatre'
+                    'description': entry.title,
+                    'icon': entry.icon
                 },
                 'geometry': {
                     'type': 'Point',
@@ -39,6 +40,10 @@ map.on('load', function () {
             'type': 'symbol',
             'source': 'places',
             'layout': {
+                'text-field': ['get', 'description'],
+                'text-variable-anchor': ['top', 'bottom', 'left', 'right'],
+                'text-radial-offset': 0.5,
+                'text-justify': 'auto',
                 'icon-image': '{icon}-15',
                 'icon-allow-overlap': true
             }
@@ -53,6 +58,7 @@ map.on('load', function () {
 
             $("#title").html(obj.title);
             $("#description").html(obj.description);
+            $("#address").html(obj.address);
         });
 
         // Change the cursor to a pointer when the mouse is over the places layer.

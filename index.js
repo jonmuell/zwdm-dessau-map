@@ -2,7 +2,7 @@ const express = require('express');
 const path = require('path');
 const config = require('dotenv').config().parsed;
 
-const dataRouter = require("./src/server/dataRouter")
+const dataRouter = require("./src/server/dataRouter");
 
 const app = express();
 const port = 3000;
