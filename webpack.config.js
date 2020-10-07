@@ -1,9 +1,11 @@
 const path = require('path');
 
 module.exports = {
-  entry: './src/scripts/map.js',
+  entry: {
+    main: './src/scripts/map.js',
+    addData: './src/scripts/addData.js'
+  },
   output: {
-    filename: 'main.js',
     path: path.resolve(__dirname, 'dist'),
   },
 };
