@@ -7,6 +7,45 @@ var map = new mapboxgl.Map({
     style: 'mapbox://styles/zeigwasdumachst/ckfjtlbo32i5a19ntppurfagk'
 });
 
+const eventList = $('#eventList');
+
+const updateEventList = (events) => {
+    eventList.empty();
+
+    $.each(events, (index) => {
+        const event = events[index];
+
+        const a = $('<a/>')
+        .addClass('list-group-item')
+        .addClass('list-group-item-action')
+        .appendTo(eventList);
+
+        const div = $('<div/>')
+        .addClass('d-flex')
+        .addClass('w-100')
+        .addClass('justify-content-between')
+        .appendTo(a);
+
+        $('<h5/>')
+        .addClass('mb-1')
+        .text(event.title)
+        .appendTo(div);
+
+        $('<small/>')
+        .text("HEUTE")
+        .appendTo(div);
+
+        const p = $('<p/>')
+        .addClass('mb-1')
+        .text(event.time)
+        .appendTo(a);
+
+        const small = $('<small/>')
+        .text(event.location)
+        .appendTo(a);
+    });
+}
+
 map.on('load', function () {
     axios.get("/data")
     .then((res) => {
@@ -59,6 +98,17 @@ map.on('load', function () {
             $("#title").html(obj.title);
             $("#description").html(obj.description);
             $("#address").html(obj.address);
+
+            const pageName = obj.fbPageName;
+
+            axios.get("/data/events", {params: {pageName}})
+            .then((res) => {
+                updateEventList(res.data);
+            })
+            .catch((err) => {
+                updateEventList([]);
+                console.error(err);
+            });
         });
 
         // Change the cursor to a pointer when the mouse is over the places layer.
