@@ -16,7 +16,7 @@ router.get('/add', (req, res) => {
 
 router.post('/add', jsonParser, (req, res) => {
   data.push(req.body);
-  res.send("ok");
+  res.sendStatus(200);
 });
 
 module.exports = router;

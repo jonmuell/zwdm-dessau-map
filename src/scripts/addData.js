@@ -24,9 +24,6 @@ $("#buttonSubmit").click(function () {
     }
 
     axios.post("/data/add", pageData)
-    .then(res => {
-        console.log(res.data);
-    })
     .catch((err) => {
         console.error(err);
     })
