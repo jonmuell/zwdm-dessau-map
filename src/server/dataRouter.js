@@ -23,10 +23,6 @@ router.get('/events', (req, res) => {
   }
 });
 
-router.get('/add', (req, res) => {
-  res.render('addData');
-});
-
 router.post('/add', jsonParser, (req, res) => {
   data.push(req.body);
   res.sendStatus(200);

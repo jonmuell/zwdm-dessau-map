@@ -12,10 +12,6 @@ const MAPBOX_API_KEY = config["MAPBOX_API_KEY"];
 app.set('view engine', 'pug');
 app.set('views', path.join(__dirname, '/src/views'));
 
-app.get('/', (req, res) => {
-  res.render('index', { MAPBOX_API_KEY });
-});
-
 app.use(express.static('dist'));
 app.use('/data', dataRouter);
 

@@ -1,8 +1,16 @@
-import Vue from 'vue'
-import MapView from "./map/map.vue";
+import Vue from 'vue';
+import VueRouter from 'vue-router';
 
-new Vue({
-    el: "#app",
-    components: {MapView},
-    render: h => h(MapView)
-});
+Vue.use(VueRouter);
+
+import MapView from "./map/map.vue";
+import AddDataView from "./addData/addData.vue";
+
+let routes = [
+    {path: '/', component: MapView},
+    {path: '/add', component: AddDataView}
+]
+
+let router = new VueRouter({routes})
+
+new Vue({router}).$mount('#app');

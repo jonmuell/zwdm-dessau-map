@@ -1,6 +1,7 @@
 const path = require('path');
 const VueLoaderPlugin = require('vue-loader/lib/plugin');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
+const Dotenv = require('dotenv-webpack');
 
 module.exports = {
     entry: {
@@ -42,7 +43,8 @@ module.exports = {
         new HtmlWebpackPlugin({
             template: './src/frontend/index.pug',
             filename: 'index.html'
-        })
+        }),
+        new Dotenv()
     ],
     resolve: {
         alias: {
