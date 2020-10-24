@@ -1,0 +1,10 @@
+.row
+    .col-9
+        div#map(style='width: 100%; height: 100vh;')
+    .col-3
+        h3#title {{ sidebar.title}}
+        h4#description {{ sidebar.description}}
+        p#address {{ sidebar.address}}
+        br
+        .list-group#eventList
+            event-view(v-for="event in events" :event="event")

@@ -1,0 +1,38 @@
+<!--suppress XmlUnboundNsPrefix -->
+.row
+    .col-4
+    .col-4
+        form
+            .form-group#IdGroup
+                label(for="inputId") ID
+                input.form-control#inputId(type="text" aria-describedby="descriptionId" v-model="entry.id")
+                small.form-text.text-muted#descriptionId Eine Buchstabenkombination, welche zur Identifizierung dient
+            .form-group#titleGroup
+                label(for="inputTitle") Name
+                input.form-control#inputTitle(aria-describedby="descriptionTitle" v-model="entry.title")
+                small.form-text.text-muted#descriptionTitle Name der Location, so wie sie auf Facebook oder Google Maps eingetragen ist
+            .form-group#descriptionGroup
+                label(for="inputDescription") Beschreibung
+                input.form-control#inputDescription(aria-describedby="descriptionDescription" v-model="entry.description")
+                small.form-text.text-muted#descriptionDescription Ein paar Infos zur Location
+            .form-group#positionGroup
+                label(for="inputPositionLat") Koordinaten
+                input.form-control#inputPositionLat(type="number" aria-describedby="descriptionPositionLat" v-model.number="entry.position.lat")
+                small.form-text.text-muted#descriptionPositionLat Latitude der Location (z.B. 51.1234)
+                input.form-control#inputPositionLon(type="number" aria-describedby="descriptionPositionLon" v-model.number="entry.position.lon")
+                small.form-text.text-muted#descriptionPositionLon Longitude der Location (z.B. 12.1234)
+            .form-group#iconGroup
+                label(for="inputIcon") Icon
+                input.form-control#inputIcon(aria-describedby="descriptionIcon" v-model="entry.icon")
+                small.form-text.text-muted#descriptionIcon Welches Icon genutzt werden soll (siehe https://labs.mapbox.com/maki-icons/)
+            .form-group#addressGroup
+                label(for="inputAddress") Adresse
+                input.form-control#inputAddress(aria-describedby="descriptionAddress" v-model="entry.address")
+                small.form-text.text-muted#descriptionAddress Straße und Hausnummer der Location
+            .form-group#fbPageNameGroup
+                label(for="inputFb") Facebook ID der Seite
+                input.form-control#inputFb(aria-describedby="descriptionFb" v-model="entry.fbPageName")
+                small.form-text.text-muted#descriptionFb https://www.facebook.com/zeigwasdumachst -> 'zeigwasdumachst'
+            button.btn.btn-primary#buttonSubmit(type="submit" v-on:click="submit()") Eintragen
+            button.btn.btn-secondary#buttonReturn(type="button" v-on:click="returnToMap()") Zurück
+    .col-4
