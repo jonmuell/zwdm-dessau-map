@@ -1,6 +1,8 @@
-a.list-group-item.list-group-item-action
+a.list-group-item.list-group-item-action(v-bind:href="event.url" target="_blank" rel="noopener noreferrer")
     .d-flex.w-100.justify-content-between
         h5.mb-1 {{ event.title }}
         small(v-if="this.isToday") HEUTE
-    p.mb-1 {{ event.time }}
+    p.mb-1 {{ event.dates[0] }}
     small {{ event.location }}
+    br
+    small {{ event.address }}

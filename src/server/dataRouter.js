@@ -2,6 +2,8 @@ const express = require('express');
 const router = express.Router();
 const bodyParser = require('body-parser');
 
+const {getEventsForLocation} = require("./dynamoDb");
+
 const jsonParser = bodyParser.json();
 
 const data = require("./data.json");
@@ -12,15 +14,20 @@ router.get('/', (req, res) => {
 });
 
 router.get('/events', (req, res) => {
-  const pageName = req.query.pageName
+  const locationId = req.query.locationId;
 
-  const filteredEvents = events[pageName];
+  getEventsForLocation(locationId, (data, err) => {
+    if (err) {
+      res.sendStatus(500);
+    } else {
+      const eventsMap = data.events;
+      const eventIds = Object.keys(eventsMap);
 
-  if(filteredEvents) {
-    res.send(filteredEvents);
-  } else {
-    res.send([]);
-  }
+      const events = eventIds.map(id => eventsMap[id]);
+
+      res.send(events);
+    }
+  });
 });
 
 router.post('/add', jsonParser, (req, res) => {

@@ -22,8 +22,13 @@ API-Schlüssel, welchen du nach erfolgreicher Registrierung bei Mapbox erstellen
 
 Um die Seite lokal auf deinem Rechner laufen zu lassen, führe einfach die folgenden Schritte aus:
 1. Führe ```npm install``` aus. Damit werden alle nötigen Bibliotheken heruntergeladen
-2. Lege eine Datei namens ```.env```. In diese fügst du nun eine Zeile mit ```MAPBOX_API_KEY=XYZ```
-ein. ```XYZ``` muss dabei durch den von dir erstellen Mapbox API-Schlüssel ersetzt werden.
+2. Lege eine Datei namens ```.env```. In diese fügst du nun die folgenden Zeilen ein:
+    - ```MAPBOX_API_KEY=XYZ``` - API-Schlüssel, welchen du von Mapbox erhältst
+    - ```EVENTS_TABLE_NAME=XYZ``` - Der Name der AWS DynamoDB-Datenbank, in welcher die Veranstaltungen
+    gespeichert werden
+    - ```AWS_REGION=XYZ``` - Deine AWs Region (normal: ```eu-central-1```)
+
+    ```XYZ``` muss dabei durch die entsprechenden Werte ersetzt werden.
 3. Führe ```npm run dev``` aus. Dieser Befehl startet zwei Hintergrundprozesse, welche die Dateien
 in das von uns benötigte Format umwandeln und gleichzeitig immer wieder aktualisieren, sobald du
 Änderungen daran vornimmst.

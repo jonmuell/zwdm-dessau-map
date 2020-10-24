@@ -26,7 +26,8 @@ export default {
     },
     computed: {
         currentLocation: function () {
-            return this.locations.filter(entry => entry.id === this.currentLocationId)[0];
+            return this.locations.filter(
+                entry => entry.id === this.currentLocationId)[0];
         },
         sidebar: function () {
             if (this.currentLocationId) {
@@ -54,9 +55,10 @@ export default {
             this.events = [];
             const pageName = this.currentLocation.fbPageName;
 
-            axios.get("/data/events", {params: {pageName}})
+            axios.get("/data/events", {params: {locationId: pageName}})
             .then((res) => {
                 this.events = res.data;
+                console.log(res.data);
             })
             .catch((err) => {
                 this.events = [];
